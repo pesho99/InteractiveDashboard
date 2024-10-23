@@ -27,5 +27,5 @@ namespace InteractiveDashboardTests
 
             _userService.Verify(m => m.GetToken(request.Email, request.Password), Times.Once);
         }
-    }]
+    }
 }

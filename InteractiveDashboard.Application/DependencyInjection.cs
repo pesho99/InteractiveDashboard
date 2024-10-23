@@ -8,6 +8,9 @@ namespace InteractiveDashboard.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IJwtService, JwtService>();
             return services;
         }
     }
