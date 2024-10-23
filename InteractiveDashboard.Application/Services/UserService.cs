@@ -1,31 +1,65 @@
-﻿using InteractiveDashboard.Domain.Models;
+﻿using InteractiveDashboard.Domain.Exceptions;
+using InteractiveDashboard.Domain.Models;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace InteractiveDashboard.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserManager _userManager;
-        private readonly IJwtService _jwtService; 
+        private readonly IConfiguration _configuration;
+        private readonly IJwtService _jwtService;
 
-        public UserService(IUserManager userManager, IJwtService jwtService)
+        public UserService(IUserManager userManager, IConfiguration configuration, IJwtService jwtService)
         {
             _userManager = userManager;
+            _configuration = configuration;
             _jwtService = jwtService;
         }
 
-        public Task CreateUserAsync(string email, string name, string password)
+        public async Task CreateUserAsync(string email, string name, string password)
         {
-            throw new NotImplementedException();
+            var existingUser = await _userManager.FindByEmailAsync(email);
+            if (existingUser != null)
+            {
+                throw new GeneralException("User with the same username already exists");
+            }
+            User user = new()
+            {
+                Email = email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+                Name = name,
+            };
+            IdentityResult result = await _userManager.CreateAsync(user, password);
+            if (!result.Succeeded)
+            {
+                throw new MultipleException(result.Errors.Select(e => e.Description).ToList());
+            }
         }
 
-        public Task<string> GetToken(string email, string password)
+        public async Task<string> GetToken(string email, string password)
         {
-            throw new NotImplementedException();
+            User user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                throw new GeneralException("User or password wrong");
+            }
+            if (!await _userManager.CheckPasswordAsync(user, password))
+            {
+                throw new GeneralException("User or password wrong");
+            }
+            var token = await _jwtService.GetToken(user);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public Task<User> GetUser(string email)
         {
-            throw new NotImplementedException();
+            return _userManager.FindByEmailAsync(email);
         }
     }
 }

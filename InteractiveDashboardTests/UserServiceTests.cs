@@ -1,6 +1,7 @@
 ﻿using InteractiveDashboard.Application.Services;
 using InteractiveDashboard.Domain.Exceptions;
 using InteractiveDashboard.Domain.Models;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -9,20 +10,24 @@ namespace InteractiveDashboardTests
     public class UserServiceTests
     {
         UserService _subject;
-        Mock<IUserManager> _managerMock = new Mock<IUserManager>();
-        Mock<IJwtService> _jwtServiceMock = new Mock<IJwtService>();
+        Mock<IUserManager> _managerMock;
+        Mock<IJwtService> _jwtServiceMock;
+        Mock<IConfiguration> _configuration;
 
         [SetUp]
         public void Setup()
         {
-            _subject = new UserService(_managerMock.Object, _jwtServiceMock.Object);
+            _managerMock = new Mock<IUserManager>();
+            _jwtServiceMock = new Mock<IJwtService>();
+            _configuration = new Mock<IConfiguration>();
+            _subject = new UserService(_managerMock.Object, _configuration.Object, _jwtServiceMock.Object);
         }
 
         [Test]
         public async Task Verify_ManagerMock_CalledOnCreate()
         {
+            _managerMock.Setup(m => m.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(Microsoft.AspNetCore.Identity.IdentityResult.Success);
             await _subject.CreateUserAsync("test@test.com", "user", "password");
-
             _managerMock.Verify(x => x.CreateAsync(It.Is<User>(u => u.Name == "user" && u.Email == "test@test.com"), "password"), Times.Once);
         }
 
