@@ -29,7 +29,7 @@ namespace InteractiveDashboardTests
             var token = await _subject.GetToken(user);
 
             Assert.That(token.Claims.Single(c => c.Type == ClaimTypes.Email).Value, Is.EqualTo("test@test.com"));
-            //Add more verifications
+            Assert.That(token.Claims.Single(c => c.Type == "Name").Value, Is.EqualTo("Test"));
         }
     }
 }
