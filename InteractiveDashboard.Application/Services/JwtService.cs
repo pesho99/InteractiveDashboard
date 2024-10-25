@@ -1,4 +1,5 @@
 ﻿using InteractiveDashboard.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,14 +12,14 @@ namespace InteractiveDashboard.Application.Services
     {
         private readonly IConfiguration _configuration;
 
+
         public JwtService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public Task<JwtSecurityToken> GetToken(User user)
+        public async Task<JwtSecurityToken> GetToken(User user)
         {
-
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
 
@@ -37,7 +38,8 @@ namespace InteractiveDashboard.Application.Services
                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                    );
 
-            return Task.FromResult(token);
+            return token;
         }
     }
+
 }

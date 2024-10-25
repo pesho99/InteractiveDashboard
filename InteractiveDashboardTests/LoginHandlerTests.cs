@@ -25,7 +25,7 @@ namespace InteractiveDashboardTests
             var cs = new CancellationTokenSource();
             await _subject.Handle(request, cs.Token);
 
-            _userService.Verify(m => m.GetToken(request.Email, request.Password), Times.Once);
+            _userService.Verify(m => m.GetTokenAsync(request.Email, request.Password), Times.Once);
         }
     }
 }

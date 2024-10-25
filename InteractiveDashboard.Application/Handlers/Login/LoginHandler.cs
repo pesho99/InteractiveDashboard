@@ -14,7 +14,7 @@ namespace InteractiveDashboard.Application.Handlers.Login
 
         public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            string token = await _userService.GetToken(request.Email, request.Password);
+            string token = await _userService.GetTokenAsync(request.Email, request.Password);
             return new LoginResponse(token);
         }
     }

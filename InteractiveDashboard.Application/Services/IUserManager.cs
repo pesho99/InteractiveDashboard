@@ -5,7 +5,7 @@ namespace InteractiveDashboard.Application.Services
 {
     public interface IUserManager
     {
-        Task<IdentityResult> AddToRoleAsync(User user1, string role);
+        Task<IdentityResult> AddToRoleAsync(User user1, string user2);
         Task<bool> CheckPasswordAsync(User user, string password);
         Task<IdentityResult> CreateAsync(User user, string password);
         Task<User> FindByEmailAsync(string email);

@@ -10,5 +10,8 @@ namespace InteractiveDashboard.Infrastructure.Database
         {
 
         }
+
+        public DbSet<PersonalTicker> PersonalTickers { get; set; }
+
     }
 }

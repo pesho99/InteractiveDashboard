@@ -15,6 +15,7 @@ namespace InteractiveDashboard.Application.Handlers.Register
 
         public async Task<EmptyResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
+         
             await _userService.CreateUserAsync(request.Email, request.Name, request.Password);
             return new EmptyResponse();
         }

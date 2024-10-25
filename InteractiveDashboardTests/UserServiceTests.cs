@@ -42,34 +42,34 @@ namespace InteractiveDashboardTests
         [Test]
         public async Task Verify_CallsGetUser_OnGetUser()
         {
-            await _subject.GetUser("test@test.com");
+            await _subject.GetUserAsync("test@test.com");
             _managerMock.Verify(x => x.FindByEmailAsync("test@test.com"), Times.Once);
         }
 
         [Test]
         public async Task Verify_CallsGetEmail_OnGetUser()
         {
-            await _subject.GetUser("test@test.com");
+            await _subject.GetUserAsync("test@test.com");
             _managerMock.Verify(x => x.FindByEmailAsync("test@test.com"), Times.Once);
         }
 
         public async Task Verify_ThrowsError_OnGetToken_WhenNoUser()
         {
             _managerMock.Setup(m => m.FindByEmailAsync("test@test.com")).Returns(Task.FromResult((User)null));
-            Assert.ThrowsAsync<GeneralException>(async () => await _subject.GetToken("test@test.com", "password"));
+            Assert.ThrowsAsync<GeneralException>(async () => await _subject.GetTokenAsync("test@test.com", "password"));
         }
         public async Task Verify_ThrowsError_OnGetToken_WhenPasswordIsWrong()
         {
             _managerMock.Setup(m => m.FindByEmailAsync("test@test.com")).Returns(Task.FromResult(new User()));
             _managerMock.Setup(m => m.CheckPasswordAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(false);
-            Assert.ThrowsAsync<GeneralException>(async () => await _subject.GetToken("test@test.com", "password"));
+            Assert.ThrowsAsync<GeneralException>(async () => await _subject.GetTokenAsync("test@test.com", "password"));
         }
         public async Task Verify_ReturnsToken_OnGetToken_Ok()
         {
             _managerMock.Setup(m => m.FindByEmailAsync("test@test.com")).Returns(Task.FromResult(new User()));
             _managerMock.Setup(m => m.CheckPasswordAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(true);
             var token = new JwtSecurityToken();
-            await _subject.GetToken("test@test.com", "password");
+            await _subject.GetTokenAsync("test@test.com", "password");
         }
     }
 }

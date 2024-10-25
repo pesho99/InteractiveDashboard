@@ -31,13 +31,5 @@ namespace InteractiveDashboard.Api.Controllers
             var token = await _mediator.Send(command);
             return Ok(token);
         }
-
-        [HttpGet]
-        [Route("test")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> Test()
-        {
-            return Ok("Test");
-        }
     }
 }

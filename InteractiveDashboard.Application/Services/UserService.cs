@@ -1,6 +1,5 @@
 ﻿using InteractiveDashboard.Domain.Exceptions;
 using InteractiveDashboard.Domain.Models;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -42,7 +41,7 @@ namespace InteractiveDashboard.Application.Services
             }
         }
 
-        public async Task<string> GetToken(string email, string password)
+        public async Task<string> GetTokenAsync(string email, string password)
         {
             User user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -57,7 +56,7 @@ namespace InteractiveDashboard.Application.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Task<User> GetUser(string email)
+        public Task<User> GetUserAsync(string email)
         {
             return _userManager.FindByEmailAsync(email);
         }

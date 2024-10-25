@@ -1,4 +1,5 @@
-﻿using InteractiveDashboard.Domain.Models;
+﻿using InteractiveDashboard.Application.Repos;
+using InteractiveDashboard.Domain.Models;
 using InteractiveDashboard.Infrastructure.Database;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace InteractiveDashboard.Infrastructure
 
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+            services.AddScoped<IPersonalTickerRepo, PersonalTickerRepo>();
 
             return services;
         }
