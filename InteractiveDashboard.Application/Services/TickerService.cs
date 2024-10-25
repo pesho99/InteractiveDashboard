@@ -17,19 +17,23 @@ namespace InteractiveDashboard.Application.Services
             _dateTimeService = dateTimeService;
         }
 
-        public List<string> GetAllTickers()
-        {
-            throw new NotImplementedException();
-        }
-
         public TickerDto GetTicker(string tickerName)
         {
-            throw new NotImplementedException();
+            return _tickers[tickerName];
+        }
+     
+        public async Task PushPrice(string tickerNamne, decimal askPrice, decimal bidPrice)
+        {
+            var dto = _tickers.GetOrAdd(tickerNamne, new TickerDto { SymbolName = tickerNamne });
+            dto.Ask = askPrice;
+            dto.Bid = bidPrice;
+            dto.PriceDate = _dateTimeService.GetCurrentDateTime();
+            await _hubContext.Clients.Group(tickerNamne).PriceUpdate(dto);
         }
 
-        public Task PushPrice(string tickerNamne, decimal askPrice, decimal bidPrice)
+        public List<string> GetAllTickers()
         {
-            throw new NotImplementedException();
+            return _tickers.Keys.ToList();
         }
     }
 }

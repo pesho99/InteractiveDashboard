@@ -1,5 +1,10 @@
 ﻿using InteractiveDashboard.Application.Services;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace InteractiveDashboard.Application.Handlers.Tickers
 {
@@ -12,9 +17,9 @@ namespace InteractiveDashboard.Application.Handlers.Tickers
             _tickerService = tickerService;
         }
 
-        public Task<List<string>> Handle(GetAllTickersCommand request, CancellationToken cancellationToken)
+        Task<List<string>> IRequestHandler<GetAllTickersCommand, List<string>>.Handle(GetAllTickersCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_tickerService.GetAllTickers());
         }
     }
 }

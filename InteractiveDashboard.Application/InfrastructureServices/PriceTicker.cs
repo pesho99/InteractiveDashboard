@@ -32,7 +32,12 @@ namespace InteractiveDashboard.Application.Services
 
         private async Task GerneratePrices()
         {
-           
+            foreach (var ticker in _tickers)
+            {
+                var bidIndex = rnd.Next(prices.Count);
+                var askIndex = rnd.Next(prices.Count);  //not a real random. BEware
+                await _tickerService.PushPrice(ticker, prices[askIndex], prices[bidIndex]);
+            }
         }
     }
 }

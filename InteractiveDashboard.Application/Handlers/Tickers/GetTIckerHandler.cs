@@ -15,7 +15,7 @@ namespace InteractiveDashboard.Application.Handlers.Tickers
 
         public Task<TickerDto> Handle(GetTckerCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_tickerService.GetTicker(request.TickerName));
         }
     }
 }

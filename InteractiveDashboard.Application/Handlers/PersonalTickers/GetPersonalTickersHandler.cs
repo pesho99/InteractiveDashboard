@@ -14,7 +14,7 @@ namespace InteractiveDashboard.Application.Handlers.PersonalTickers
 
         public Task<List<string>> Handle(GetPersonalTickersCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return _personalTickerRepo.GetTickersForUser(request.UserEmail);
         }
     }
 }
