@@ -18,7 +18,7 @@ namespace InteractiveDashboard.Application.Services
             _configuration = configuration;
         }
 
-        public async Task<JwtSecurityToken> GetToken(User user)
+        public Task<JwtSecurityToken> GetToken(User user)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -38,7 +38,7 @@ namespace InteractiveDashboard.Application.Services
                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                    );
 
-            return token;
+            return Task.FromResult(token);
         }
     }
 

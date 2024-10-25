@@ -52,18 +52,23 @@ namespace InteractiveDashboardTests
             await _subject.GetUserAsync("test@test.com");
             _managerMock.Verify(x => x.FindByEmailAsync("test@test.com"), Times.Once);
         }
+        [Test]
 
         public async Task Verify_ThrowsError_OnGetToken_WhenNoUser()
         {
             _managerMock.Setup(m => m.FindByEmailAsync("test@test.com")).Returns(Task.FromResult((User)null));
             Assert.ThrowsAsync<GeneralException>(async () => await _subject.GetTokenAsync("test@test.com", "password"));
         }
+        [Test]
+
         public async Task Verify_ThrowsError_OnGetToken_WhenPasswordIsWrong()
         {
             _managerMock.Setup(m => m.FindByEmailAsync("test@test.com")).Returns(Task.FromResult(new User()));
             _managerMock.Setup(m => m.CheckPasswordAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(false);
             Assert.ThrowsAsync<GeneralException>(async () => await _subject.GetTokenAsync("test@test.com", "password"));
         }
+        [Test]
+
         public async Task Verify_ReturnsToken_OnGetToken_Ok()
         {
             _managerMock.Setup(m => m.FindByEmailAsync("test@test.com")).Returns(Task.FromResult(new User()));

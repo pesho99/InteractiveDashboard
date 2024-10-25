@@ -5,6 +5,6 @@ namespace InteractiveDashboard.Application.Handlers.Tickers
 {
     public class GetTckerCommand : IRequest<TickerDto>
     {
-        public string TickerName { get; set; }
+        public string TickerName { get; set; } = string.Empty;
     }
 }
