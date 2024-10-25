@@ -3,7 +3,6 @@ import * as signalR from '@microsoft/signalr';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { PriceUpdate } from '../models';
 import TickerComponent from './TickerComponent';
-import axios from 'axios';
 import ApiService from '../Services/ApiService';
 
 
@@ -24,6 +23,7 @@ const TickerDisplay: React.FC = () => {
       connection?.stop().then(() => console.log('Connection stopped')).catch((err) => console.error('Error stopping connection: ', err));
       setConnecton(null)
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   useEffect(() => {
@@ -45,6 +45,7 @@ const TickerDisplay: React.FC = () => {
       }
     });
     setPrices(tempPrices)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[tickerNames])
 
   const connect = async () =>{

@@ -5,11 +5,6 @@ const Navbar: React.FC = () => {
       <nav>
         <ul style={navStyles}>
           <li>
-            <NavLink to="/" style={({ isActive }) => (isActive ? activeLinkStyle : linkStyle)}>
-              Home
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/login" style={({ isActive }) => (isActive ? activeLinkStyle : linkStyle)}>
               Login
             </NavLink>

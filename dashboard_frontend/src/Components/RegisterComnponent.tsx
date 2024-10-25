@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../Services/ApiService';
 
@@ -35,7 +34,7 @@ const RegisterComponent: React.FC = () => {
     try {
       const response = await ApiService.register(formData.name, formData.email, formData.password)
       console.log('User registered:', response.data);
-      navigate('/login'); // Redirect to the login page
+      navigate('/login');
     } catch (err: any) {
         console.log(err.response)
       setError(err.response?.data?.Errors?.join("\r\n") || 'Something went wrong');

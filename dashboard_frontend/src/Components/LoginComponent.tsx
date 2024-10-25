@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../Services/ApiService';
 
@@ -37,7 +36,7 @@ const LoginComponent: React.FC = () => {
       localStorage.setItem('authToken', token);
       console.log('Logged in successfully:', token);
       
-      navigate('/TickerDisplay'); 
+      navigate('/dashboard'); 
       
     } catch (err: any) {
       setError(err.response?.data?.message || 'Invalid login credentials');
