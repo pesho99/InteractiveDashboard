@@ -83,6 +83,7 @@ const TickerDisplay: React.FC = () => {
          updatedPrices[existingPriceIndex].ask = update.ask;
          updatedPrices[existingPriceIndex].bidchange = update.bid - updatedPrices[existingPriceIndex].bid ;
          updatedPrices[existingPriceIndex].bid = update.bid;
+         updatedPrices[existingPriceIndex].priceDate = update.priceDate;
 
          return updatedPrices;
        }
