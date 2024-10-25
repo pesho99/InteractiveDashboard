@@ -54,7 +54,7 @@ const TickerDisplay: React.FC = () => {
     }
      // Create the SignalR connection
      const newConnection = new signalR.HubConnectionBuilder()
-     .withUrl('https://localhost:7230/tickerhub') // replace with your SignalR hub URL
+     .withUrl('http://localhost:8080/tickerhub') // replace with your SignalR hub URL
      .withAutomaticReconnect()
      .configureLogging(signalR.LogLevel.Information)
      .build();

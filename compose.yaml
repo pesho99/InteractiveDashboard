@@ -1,0 +1,22 @@
+services:
+  web_api:
+    image: pesho99/interactivedashboard
+    container_name: web_api
+    ports:
+      - 8080:80
+    depends_on:
+      sql:
+        condition: service_started
+  react-app:
+    image: pesho99/frontend
+    container_name: frontend
+    ports:
+      - '3000:80'
+  sql:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sql_server2022
+    ports: # not actually needed, because the two services are on the same network
+      - "1433:1433" 
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=InteractiveDashboardPass123
