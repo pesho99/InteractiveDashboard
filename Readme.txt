@@ -5,6 +5,7 @@ Info:
 4. The application is based on clean code architecture
 5. The application is developed with .Net as a backend and React as a frontend. React was chosen as the most popular frontend library
 6. Backend uses Entity Framework for database access. EF was chosen as it allows easy maintenance and is understood by most developers. 
+7. The application uses mediatr and fluent validation to provide separation of concerns. 
 
 
 How to run:
